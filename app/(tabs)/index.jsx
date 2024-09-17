@@ -16,14 +16,20 @@ import {
   widthPercentageToDP as wp, 
   heightPercentageToDP as hp 
 } from 'react-native-responsive-screen';
+import { useRouter } from 'expo-router';
+
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const router = useRouter();
+
   const handleLogin = () => {
     // Implement your login logic here
     console.log('Login pressed');
+    router.push('/home');
+
   };
 
   return (

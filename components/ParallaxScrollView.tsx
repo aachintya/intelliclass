@@ -1,3 +1,4 @@
+
 import type { PropsWithChildren, ReactElement } from 'react';
 import { StyleSheet, useColorScheme } from 'react-native';
 import Animated, {
@@ -5,6 +6,7 @@ import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+
 } from 'react-native-reanimated';
 
 import { ThemedView } from '@/components/ThemedView';
