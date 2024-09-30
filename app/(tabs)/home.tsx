@@ -12,6 +12,7 @@ import {
 } from "react-native-responsive-screen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import AttendanceUploader from "../../components/Attendance/AttendanceUploader"; // Importing the Attendance Uploader component
 
 const Home = () => {
   return (
@@ -20,10 +21,15 @@ const Home = () => {
         <TouchableOpacity>
           <FontAwesome5 name="bars" size={26} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headerText}> Hello, User</Text>
+        <Text style={styles.headerText}>Hello, User</Text>
         <TouchableOpacity>
-          <Ionicons name="settings" size={26} color="white"/>
+          <Ionicons name="settings" size={26} color="white" />
         </TouchableOpacity>
+      </View>
+
+      {/* AttendanceUploader Component - this will render the camera functionality for attendance */}
+      <View style={styles.attendanceContainer}>
+        <AttendanceUploader />
       </View>
     </SafeAreaView>
   );
@@ -44,11 +50,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: wp("5%"),
     flexDirection: "row",
-   
   },
   headerText: {
     color: "#ffffff",
     fontSize: hp("3%"),
     fontWeight: "400",
+  },
+  attendanceContainer: {
+    flex: 1, // Taking up the remaining space after the header
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

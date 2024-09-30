@@ -18,18 +18,16 @@ import {
 } from 'react-native-responsive-screen';
 import { useRouter } from 'expo-router';
 
-
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const router = useRouter();
 
   const handleLogin = () => {
     // Implement your login logic here
     console.log('Login pressed');
+    // Redirect to the Home screen after successful login
     router.push('/home');
-
   };
 
   return (
@@ -80,7 +78,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1c1c1c', // Dark Charcoal
+    backgroundColor: '#1c1c1c',
   },
   keyboardAvoidingView: {
     flex: 1,
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
   loginContainer: {
     width: wp('80%'),
     maxWidth: 400,
-    backgroundColor: '#2a2a2a', 
+    backgroundColor: '#2a2a2a',
     padding: wp('5%'),
     borderRadius: 10,
     alignItems: 'center',
@@ -107,12 +105,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: wp('6%'),
     fontWeight: 'bold',
-    color: '#f8f8f8', 
+    color: '#f8f8f8',
     marginBottom: hp('2%'),
   },
   input: {
     width: '100%',
-    backgroundColor: '#333333', 
+    backgroundColor: '#333333',
     color: '#f8f8f8',
     padding: wp('4%'),
     borderRadius: 5,
@@ -121,13 +119,13 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: '100%',
-    backgroundColor: '#2a2d72', 
+    backgroundColor: '#2a2d72',
     padding: wp('4%'),
     borderRadius: 5,
     alignItems: 'center',
   },
   loginButtonText: {
-    color: '#f8f8f8', 
+    color: '#f8f8f8',
     fontSize: wp('4.5%'),
     fontWeight: 'bold',
   },

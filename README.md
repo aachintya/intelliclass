@@ -25,6 +25,27 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## Accessing the Backend
+
+1. Open terminal
+2. Connect to your server using SSH:
+   
+   ```bash
+      ssh root@64.227.179.50
+   ```
+   Enter the password
+
+3. Activate the virtual environment:
+
+   ```bash
+      source /root/myenv/bin/activate
+   ```
+
+4. Running the Backend 
+
+   ```bash
+      python app.py
+   ```
 ## Get a fresh project
 
 When you're ready, run:
