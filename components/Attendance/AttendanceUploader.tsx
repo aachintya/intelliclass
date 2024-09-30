@@ -1,59 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Alert, Image } from 'react-native';
+import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
+import { useState } from 'react';
+import { View, Button, Image, Alert, Text } from 'react-native';
 
-const AttendanceUploader: React.FC = () => {
-    const [imageUri, setImageUri] = useState<string | null>(null);
+const AttendanceUploader = () => {
+  const [imageUri, setImageUri] = useState<string | null>(null);
 
-    const handleTakePhoto = async () => {
-        // Ask the user for permission to access the camera
-        const { status } = await ImagePicker.requestCameraPermissionsAsync();
-        if (status !== 'granted') {
-            Alert.alert('Camera permission required', 'Please enable camera access in your settings.');
-            return;
-        }
+  const handleTakePhoto = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Camera permission required', 'Please enable camera access in your settings.');
+      return;
+    }
 
-        // Launch the camera to take a photo
-        const result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-        if (!result.canceled) {
-            setImageUri(result.assets[0].uri);
-            Alert.alert('Photo Taken', 'You have successfully taken a photo.');
-        } else {
-            Alert.alert('Photo Cancelled', 'You did not take any photo.');
-        }
-    };
+    if (!result.canceled) {
+      setImageUri(result.assets[0].uri);
+      uploadImage(result.assets[0].uri);
+    } else {
+      Alert.alert('Photo Cancelled', 'You did not take any photo.');
+    }
+  };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Take Attendance Photo</Text>
-            <Button title="Take Photo" onPress={handleTakePhoto} />
-            {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-        </View>
-    );
+  const uploadImage = async (uri: string) => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri: uri, 
+      name: 'photo.jpg', 
+      type: 'image/jpeg', 
+    } as any);
+
+    try {
+      const response = await axios.post('http://64.227.179.50:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data.recognized_faces) {
+        Alert.alert('Faces Detected', `Recognized: ${response.data.recognized_faces.join(', ')}`);
+      } else {
+        Alert.alert('No Faces Detected');
+      }
+    } catch (error) {
+      Alert.alert('Upload error', `${error}`);
+    }
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button title="Take Photo" onPress={handleTakePhoto} />
+      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}
+    </View>
+  );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
-    image: {
-        marginTop: 20,
-        width: 200,
-        height: 200,
-        borderRadius: 10,
-    },
-});
 
 export default AttendanceUploader;
